@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sofra, a fictional neighbourhood restaurant celebrating seasonal Mediterranean food. Explore the menu and plan a visit.">
+  <meta name="theme-color" content="#203d32">
+  <title>Sofra — Good food. Good company.</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="Sofra home">sofra<span class="brand-dot">.</span></a>
+      <nav aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="#menu">The menu</a></li>
+          <li><a href="#about">Our story</a></li>
+          <li><a href="#visit">Find us</a></li>
+        </ul>
+      </nav>
+      <a class="button button-small" href="#reservation">Book a table <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero container" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="small-line" aria-hidden="true"></span> A seat at our table</p>
+        <h1 id="hero-title">Good food.<br>Good <em>company.</em></h1>
+        <p class="hero-description">Seasonal ingredients, Mediterranean roots, and a little time to slow down. Welcome to Sofra.</p>
+        <div class="hero-actions">
+          <a class="button" href="#reservation">Book a table <span aria-hidden="true">↗</span></a>
+          <a class="text-link" href="#menu">Explore the menu <span aria-hidden="true">↓</span></a>
+        </div>
+        <p class="hero-note">Made for sharing. Meant to be savoured.</p>
+      </div>
+      <figure class="hero-image">
+        <img src="assets/restaurant.jpg" alt="An elegantly plated dish with fresh herbs in a softly lit restaurant" width="1400" height="933" fetchpriority="high">
+        <figcaption><span>Seasonal by nature</span><span aria-hidden="true">✳</span></figcaption>
+      </figure>
+    </section>
+
+    <div class="values-strip" aria-label="Our approach">
+      <div class="container values-inner"><span>Fresh & seasonal</span><span aria-hidden="true">✳</span><span>Mediterranean at heart</span><span aria-hidden="true">✳</span><span>Better together</span></div>
+    </div>
+
+    <section class="menu-section section-space container" id="menu" aria-labelledby="menu-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">From our kitchen</p><h2 id="menu-title">A little of everything.<br><em>A lot of flavour.</em></h2></div>
+        <p>Familiar favourites with a seasonal twist.<br>Pick something for yourself. Share something with the table.</p>
+      </div>
+      <nav class="menu-index" aria-label="Menu categories"><a href="#starters">01 / Starters</a><a href="#mains">02 / Mains</a><a href="#desserts">03 / Desserts</a></nav>
+      <div class="menu-grid">
+        <article class="menu-category" id="starters" aria-labelledby="starters-title">
+          <div class="category-heading"><h3 id="starters-title">Starters</h3><span aria-hidden="true">01</span></div>
+          <ul class="dish-list">
+            <li><div class="dish-title"><h4>Whipped feta</h4><span>£9</span></div><p>Roasted grapes, thyme honey, warm sourdough.</p><span class="diet-label">Vegetarian</span></li>
+            <li><div class="dish-title"><h4>Charred aubergine</h4><span>£10</span></div><p>Tahini, pomegranate, parsley & a squeeze of lemon.</p><span class="diet-label">Vegan</span></li>
+            <li><div class="dish-title"><h4>Crispy calamari</h4><span>£12</span></div><p>Golden and tender, with lemon aioli & fresh herbs.</p></li>
+          </ul>
+        </article>
+        <article class="menu-category" id="mains" aria-labelledby="mains-title">
+          <div class="category-heading"><h3 id="mains-title">Mains</h3><span aria-hidden="true">02</span></div>
+          <ul class="dish-list">
+            <li><div class="dish-title"><h4>Lemon roast chicken</h4><span>£22</span></div><p>Rosemary potatoes, seasonal greens & pan juices.</p><span class="diet-label house-label">House favourite</span></li>
+            <li><div class="dish-title"><h4>Seared sea bass</h4><span>£25</span></div><p>White bean purée, cherry tomatoes & basil oil.</p></li>
+            <li><div class="dish-title"><h4>Wild mushroom orzo</h4><span>£19</span></div><p>Roasted mushrooms, aged parmesan & fresh thyme.</p><span class="diet-label">Vegetarian</span></li>
+          </ul>
+        </article>
+        <article class="menu-category" id="desserts" aria-labelledby="desserts-title">
+          <div class="category-heading"><h3 id="desserts-title">Desserts</h3><span aria-hidden="true">03</span></div>
+          <ul class="dish-list">
+            <li><div class="dish-title"><h4>Pistachio baklava</h4><span>£8</span></div><p>Delicate filo layers, orange blossom syrup & yoghurt.</p><span class="diet-label">Vegetarian</span></li>
+            <li><div class="dish-title"><h4>Olive oil cake</h4><span>£8</span></div><p>Lemon zest, seasonal berries & crème fraîche.</p><span class="diet-label">Vegetarian</span></li>
+            <li><div class="dish-title"><h4>Dark chocolate mousse</h4><span>£9</span></div><p>A little sea salt, toasted hazelnuts & pure indulgence.</p><span class="diet-label">Vegetarian</span></li>
+          </ul>
+        </article>
+      </div>
+      <p class="menu-note">All prices are in GBP. Please ask about ingredients and allergens before ordering. This is an example menu for a student project.</p>
+    </section>
+
+    <section class="about-section" id="about" aria-labelledby="about-title">
+      <div class="container about-grid">
+        <figure class="about-image"><img src="assets/interior.jpg" alt="A warm restaurant interior with wooden tables, pendant lights and green plants" width="1100" height="733" loading="lazy"><figcaption>A place to settle in.</figcaption></figure>
+        <div class="about-copy"><p class="eyebrow">The story behind the table</p><h2 id="about-title">More than a meal.<br><em>A moment together.</em></h2><p>“Sofra” means a table set for a meal. It is the idea at the heart of our restaurant: good things happen when people sit down together.</p><p>Our kitchen takes its inspiration from the Mediterranean — bright herbs, good olive oil, and ingredients that speak for themselves. Our dining room is made for unhurried lunches, long conversations, and one more bite.</p><a class="text-link" href="#reservation">There's a place for you here <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </section>
+
+    <section class="reservation-section section-space container" id="reservation" aria-labelledby="reservation-title">
+      <p class="eyebrow">Come hungry. Leave happy.</p>
+      <h2 id="reservation-title">Your table <em>is waiting.</em></h2>
+      <p>A quiet dinner for two or a gathering of your favourite people.<br>We would love to welcome you.</p>
+      <a class="button" href="tel:+442079460123">Call to book a table <span aria-hidden="true">↗</span></a>
+      <p class="booking-detail">Tuesday–Sunday · 12:00–22:00 · Parties of 1–6</p>
+      <p class="demo-note">Student project: the number below is a fictional UK example number.<br>No real bookings are accepted. The button opens your phone app.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="visit">
+    <div class="container footer-grid">
+      <div><a class="brand" href="#top" aria-label="Sofra back to top">sofra<span class="brand-dot">.</span></a><p>Good food. Good company.<br>A seat for everyone.</p></div>
+      <div><h2>Find our table</h2><address>18 Olive Lane, London<br>Example location — fictional restaurant</address><a href="tel:+442079460123">+44 20 7946 0123</a></div>
+      <div><h2>Opening hours</h2><dl class="hours"><div><dt>Tuesday–Sunday</dt><dd>12:00–22:00</dd></div><div><dt>Monday</dt><dd>Closed</dd></div></dl></div>
+      <div><h2>Stay a little longer</h2><a class="footer-book" href="#reservation">Book a table <span aria-hidden="true">↗</span></a><a href="#menu">Browse the menu</a></div>
+    </div>
+    <div class="container footer-bottom"><p>© 2026 Sofra. A fictional restaurant for a student project.</p><a href="#top">Back to top ↑</a></div>
+  </footer>
+</body>
+</html>
