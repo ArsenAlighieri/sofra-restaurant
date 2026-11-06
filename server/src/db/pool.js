@@ -18,7 +18,7 @@ if (connectionString) {
   const isNeonOrCloud = connectionString.includes('neon.tech') || connectionString.includes('sslmode=require');
   pool = new Pool({
     connectionString,
-    ssl: isNeonOrCloud || isProduction ? { rejectUnauthorized: false } : false,
+    ssl: isNeonOrCloud || isProduction ? { rejectUnauthorized: true } : false,
     max: 20,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 5000,
