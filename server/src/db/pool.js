@@ -8,8 +8,11 @@ const { Pool } = pg;
 const isProduction = process.env.NODE_ENV === 'production';
 const connectionString = process.env.DATABASE_URL;
 
+if (isProduction && !connectionString) {
+  throw new Error('FATAL: DATABASE_URL environment variable is required in production. In-memory fallback is disabled.');
+}
+
 let pool = null;
-let isConnected = false;
 
 if (connectionString) {
   const isNeonOrCloud = connectionString.includes('neon.tech') || connectionString.includes('sslmode=require');
@@ -26,7 +29,7 @@ if (connectionString) {
   });
 }
 
-// In-Memory fallback store for standalone local dev when PostgreSQL is not running
+// In-Memory fallback store for standalone local dev ONLY when PostgreSQL is not running
 const fallbackStore = {
   users: [],
   menu_items: [
@@ -140,17 +143,46 @@ const fallbackStore = {
 export async function query(text, params = []) {
   if (pool) {
     try {
-      const start = Date.now();
       const res = await pool.query(text, params);
-      const duration = Date.now() - start;
       return res;
     } catch (err) {
-      console.warn('PostgreSQL query error, falling back to local memory store:', err.message);
+      if (isProduction) {
+        // In production, never swallow or fallback from real database errors
+        console.error('PostgreSQL query error in production:', err.message);
+        throw err;
+      }
+      console.warn('PostgreSQL query error, falling back to local memory store in dev:', err.message);
     }
   }
 
-  // Emulate parameterized queries in fallback store
+  if (isProduction) {
+    throw new Error('PostgreSQL pool is not initialized. Real database connection is required in production.');
+  }
+
+  // Emulate parameterized queries in fallback store for offline development only
   return executeInMemoryQuery(text, params);
+}
+
+export async function verifyDatabaseConnection() {
+  if (!pool) {
+    if (isProduction) {
+      throw new Error('No PostgreSQL connection configured in production.');
+    }
+    console.log('ℹ Running with local in-memory fallback store (development only).');
+    return false;
+  }
+
+  try {
+    const res = await pool.query('SELECT 1 as connected');
+    console.log('✓ Successfully connected to PostgreSQL database.');
+    return true;
+  } catch (err) {
+    console.error('Failed to connect to PostgreSQL database:', err.message);
+    if (isProduction) {
+      throw err;
+    }
+    return false;
+  }
 }
 
 function executeInMemoryQuery(text, params) {
