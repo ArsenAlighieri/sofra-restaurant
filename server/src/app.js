@@ -18,6 +18,10 @@ const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
 const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
 
+if (isProduction && (!process.env.CLIENT_URL || !process.env.SESSION_SECRET)) {
+  throw new Error('FATAL: CLIENT_URL and SESSION_SECRET are required in production.');
+}
+
 // 1. Trust proxy for secure cookies behind reverse proxies (Railway / Vercel)
 if (isProduction) {
   app.set('trust proxy', 1);
@@ -34,21 +38,21 @@ app.use(
       const lowerOrigin = origin.toLowerCase();
 
       // Check allowed origins
-      if (
-        lowerOrigin === clientUrl.toLowerCase() ||
-        lowerOrigin.startsWith('http://localhost') ||
-        lowerOrigin.startsWith('http://127.0.0.1') ||
-        lowerOrigin.endsWith('.vercel.app')
-      ) {
+      if (lowerOrigin === clientUrl.toLowerCase()) {
         return callback(null, true);
       }
-
-      // Permissive fallback for course evaluation
-      return callback(null, true);
+      return callback(null, false);
     },
     credentials: true,
   })
 );
+
+app.use((req, res, next) => {
+  if (req.headers.origin && req.headers.origin.toLowerCase() !== clientUrl.toLowerCase()) {
+    return res.status(403).json({ error: 'Origin not allowed.' });
+  }
+  next();
+});
 
 // 3. Webhook routes (Raw body parser MUST run BEFORE express.json())
 app.use('/api/webhooks', webhookRoutes);
