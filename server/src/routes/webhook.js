@@ -57,6 +57,9 @@ router.post(
     // Handle payment completion
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
+      if (session.payment_status !== 'paid') {
+        return res.status(200).json({ received: true, note: 'Payment not completed' });
+      }
       const orderId = session.metadata?.order_id;
       const stripeSessionId = session.id;
 
