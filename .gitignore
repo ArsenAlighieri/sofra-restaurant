@@ -1,4 +1,30 @@
+# Operating System
 .DS_Store
 Thumbs.db
+
+# Dependencies
 node_modules/
+client/node_modules/
+server/node_modules/
+
+# Environment variables
+.env
+.env.local
+client/.env
+client/.env.local
+server/.env
+server/.env.local
+
+# Build output
+client/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# Internal
 .openai/local/
