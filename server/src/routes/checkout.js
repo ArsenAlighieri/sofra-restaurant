@@ -6,6 +6,9 @@ import { query } from '../db/pool.js';
 const router = express.Router();
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+if (process.env.NODE_ENV === 'production' && stripeSecretKey && !/^(sk|rk)_test_/.test(stripeSecretKey)) {
+  throw new Error('FATAL: Only Stripe test-mode keys are permitted.');
+}
 const stripe = stripeSecretKey ? new Stripe(stripeSecretKey) : null;
 const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
 
