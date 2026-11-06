@@ -21,7 +21,8 @@ if (connectionString) {
     ssl: isNeonOrCloud || isProduction ? { rejectUnauthorized: true } : false,
     max: 20,
     idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 5000,
+    // Allow a suspended cloud database enough time to resume before failing.
+    connectionTimeoutMillis: 15000,
   });
 
   pool.on('error', (err) => {
