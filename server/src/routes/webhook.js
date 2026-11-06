@@ -20,7 +20,14 @@ router.post(
     const sig = req.headers['stripe-signature'];
     let event;
 
-    if (stripe && webhookSecret) {
+    if (process.env.NODE_ENV === 'production') {
+      if (!stripe || !webhookSecret) {
+        console.error('FATAL: Stripe credentials missing in production webhook endpoint.');
+        return res.status(500).send('Stripe webhook configuration error in production');
+      }
+      if (!sig) {
+        return res.status(400).send('Missing stripe-signature header');
+      }
       try {
         event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
       } catch (err) {
@@ -29,12 +36,21 @@ router.post(
       }
     } else {
       // In development when webhook secret is not set, parse payload directly
-      try {
-        const bodyStr = req.body.toString('utf8');
-        event = JSON.parse(bodyStr);
-        console.log('ℹ Dev webhook received without signature verification:', event.type);
-      } catch (err) {
-        return res.status(400).send('Invalid JSON payload');
+      if (stripe && webhookSecret && sig) {
+        try {
+          event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+        } catch (err) {
+          console.error('⚠️ Stripe Webhook signature verification failed in dev:', err.message);
+          return res.status(400).send(`Webhook Error: ${err.message}`);
+        }
+      } else {
+        try {
+          const bodyStr = req.body.toString('utf8');
+          event = JSON.parse(bodyStr);
+          console.log('ℹ Dev webhook received without signature verification:', event.type);
+        } catch (err) {
+          return res.status(400).send('Invalid JSON payload');
+        }
       }
     }
 

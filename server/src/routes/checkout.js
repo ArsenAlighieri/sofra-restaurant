@@ -124,10 +124,13 @@ router.post('/', requireAuth, async (req, res, next) => {
       sessionUrl = session.url;
       sessionId = session.id;
     } else {
-      // In development when STRIPE_SECRET_KEY is not yet populated
+      if (process.env.NODE_ENV === 'production') {
+        throw new Error('FATAL: STRIPE_SECRET_KEY is required in production. Simulated checkout is disabled.');
+      }
+      // In local development only when STRIPE_SECRET_KEY is not yet populated
       sessionId = `mock_session_${Date.now()}`;
       sessionUrl = `${clientUrl}/order-success?session_id=${sessionId}&order_id=${order.id}`;
-      console.warn('ℹ STRIPE_SECRET_KEY not set. Using test checkout redirect to order-success.');
+      console.warn('ℹ STRIPE_SECRET_KEY not set. Using test checkout redirect in dev mode.');
     }
 
     // 8. Associate Stripe session ID with order
